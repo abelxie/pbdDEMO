@@ -2,6 +2,11 @@
 
 ### Setup environment.
 suppressPackageStartupMessages(library(pbdDEMO, quiet = TRUE))
+
+(function(){
+
+on.exit(finalize())
+
 if(comm.size() != 4){
   stop("This example requries 4 processors.")
 }
@@ -13,14 +18,17 @@ rank <- comm.rank()
 comm.cat("\ntest value:\n", quiet=T)
 test <- (rank > 0)
 comm.print(test, all.rank=T, quiet=T)
+barrier()
 
 comm.cat("\ncomm.all:\n", quiet=T)
 test.all <- comm.all(test)
 comm.print(test.all, all.rank=T, quiet=T)
+barrier()
 
 comm.cat("\ncomm.any:\n", quiet=T)
 test.any <- comm.any(test)
 comm.print(test.any, all.rank=T, quiet=T)
+barrier()
 
 
 comm.cat("\n\n\n", quiet=T)
@@ -39,5 +47,5 @@ need2stop <- comm.any(need2stop)
 if (need2stop)
   stop("NOT AN ERROR, stopping here is the correct behavior of this demo.  See source for details.")
 
-
-finalize()
+})()
+#finalize()

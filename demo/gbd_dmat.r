@@ -26,4 +26,5 @@ if(comm.rank() == 2){
   cat("\n(global,all) X[4:6,] on all processors:\n")
   print(X[4:6,])
 }
+barrier() # without this, mpich2 on windows stuck
 finalize()

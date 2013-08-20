@@ -92,7 +92,7 @@ read.sql.ddmatrix <- function(dbname, table, bldim=.BLDIM, num.rdrs=1, ICTXT=0)
 
 
 # same as above but for csv
-read.csv.ddmatrix <- function(file, sep=",", nrows, ncols, header=FALSE, bldim=4, num.rdrs=1, ICTXT=0)
+read.csv.ddmatrix <- function(file, sep=",", nrows, ncols, header=FALSE, bldim=4, num.rdrs=1, ICTXT=0, quiet=TRUE)
 {
   if (length(bldim)==1)
     bldim <- rep(bldim, 2)
@@ -204,7 +204,7 @@ read.csv.ddmatrix <- function(file, sep=",", nrows, ncols, header=FALSE, bldim=4
   
   out <- new("ddmatrix", Data=Data, dim=dim, ldim=ldim, bldim=tmpbl, ICTXT=MYCTXT)
   
-  comm.print(Data, all.rank=T)
+  if (!quiet) comm.print(Data, all.rank=T)
   
   if (ICTXT != MYCTXT || any(tmpbl != bldim) )
     out <- dmat.redistribute(dx=out, bldim=bldim, ICTXT=ICTXT)

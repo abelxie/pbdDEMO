@@ -7,7 +7,7 @@
 }
 \usage{
   read.csv.ddmatrix(file, sep=",", nrows, ncols, header=FALSE, bldim=4, 
-                    num.rdrs=1, ICTXT=0)
+                    num.rdrs=1, ICTXT=0, quiet=TRUE)
 }
 \arguments{
   \item{file}{csv file name.}
@@ -20,6 +20,7 @@
   the matrix across the process grid}
   \item{num.rdrs}{numer of processes to be used to read in the table}
   \item{ICTXT}{BLACS context number for return}
+  \item{quiet}{Do not print out message on the partial read data}
 }
 \details{
   The function reads in data from a csv file into a distributed 

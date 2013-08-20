@@ -5,6 +5,9 @@ init.grid()
 comm.set.seed(diff = TRUE)
 
 # verify system solving at scale
-demo.verify.solve(nrows=1e3)
+pbdDEMO:::verify.solve(nrows=1e3)
+pbdDEMO:::verify.inverse(nrows=1e3)
+pbdDEMO:::verify.chol(nrows=1e3)
+pbdDEMO:::verify.svd(nrows=1e3)
 
 finalize()

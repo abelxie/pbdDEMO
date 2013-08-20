@@ -15,11 +15,11 @@ verify.svd <- function(nrows=1e3, ncols=1e3, mean=0, sd=1, bldim=8, tol=1e-7, IC
     svd_x <- La.svd(x)
   })
   
-  newd <- ddmatrix(0.0, nrow=nrows, ncol=ncols, bldim=bldim, ICTXT=ICTXT)
+  matrix_rank = length(svd_x$d)
+  newd <- ddmatrix(0.0, nrow=matrix_rank, ncol=matrix_rank, bldim=bldim, ICTXT=ICTXT)
   for (i in 1:length(svd_x$d)){
     newd[i, i] <- svd_x$d[i]
   }
-  
   
   time_verif <- timer({
     newx <- svd_x$u %*% newd %*% svd_x$vt
@@ -67,7 +67,7 @@ verify.chol <- function(nrows=1e3, mean=0, sd=1, bldim=8, tol=1e-7, ICTXT=.DEMO.
   comm.cat(paste("Generating a ", nrows, "x", nrows, " distributed matrix X of random normal data, 'symmetrizing' it by computing X <- t(X)%*%X, computing the Cholesky factorization, and then multiplying the factorization back together and comparing it to the original matrix\n", sep=""), quiet=T)
   
   time_data <- timer({
-    x <- ddmatrix("rnorm", nrow=nrow, ncol=nrows, bldim=bldim, mean=mean, sd=sd, ICTXT=ICTXT)
+    x <- ddmatrix("rnorm", nrow=nrows, ncol=nrows, bldim=bldim, mean=mean, sd=sd, ICTXT=ICTXT)
   })
   
   # symmetrize x
