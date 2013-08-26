@@ -31,6 +31,7 @@ comm.cat("Are these the same distributed matrix?\n", quiet=T)
 test <- all.equal(dx1, dx2)
 if (is.logical(test)){
   comm.cat("YES!\n\n", quiet=T)
+  print(dx1)
 } else {
   comm.cat("No...\n", quiet=T)
   comm.print(test, quiet=T)
@@ -38,6 +39,8 @@ if (is.logical(test)){
 
 
 
+### NOTE: This difference are because of the rnorm function, are called in different sequence
+### Should be very careful on the real effect on setting the seed, may not result as you expect
 # Generate locally only what is needed.
 # This will produce a different matrix because of the block cyclic 
 # distribution.
@@ -45,5 +48,19 @@ comm.set.seed(1234, diff = TRUE)
 dx3 <- ddmatrix("rnorm", nrow=n, ncol=p, bldim=4)
 
 print(dx3)
+
+# See that these two method are equivalent
+comm.cat("Are these the same distributed matrix?\n", quiet=T)
+test <- all.equal(dx1, dx3)
+if (is.logical(test)){
+  comm.cat("YES!\n\n", quiet=T)
+} else {
+  comm.cat("No...\n", quiet=T)
+  comm.print(test, quiet=T)
+    if (comm.rank()==0) {
+        print(submatrix(dx1)[1:10,1:10])
+        print(submatrix(dx3)[1:10,1:10])
+    }
+}
 
 finalize()

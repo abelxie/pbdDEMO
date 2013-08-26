@@ -12,6 +12,10 @@ dx <- ddmatrix("rnorm", nrow=n, ncol=p, bldim=c(4,4), mean=100, sd=25)
 # PCA with scaling, retaining only 90% of the variation
 pca <- prcomp(x=dx, retx=TRUE, scale=TRUE)
 
+if (comm.rank()==0) {
+    print(sapply(pca, class))
+}
+
 prop_var <- cumsum(pca$sdev)/sum(pca$sdev)
 i <- max(min(which(prop_var > 0.9)) - 1, 1)
 

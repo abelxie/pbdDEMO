@@ -17,8 +17,8 @@ init.grid()
 X <- as.matrix(iris[, -5])                            # Dimension 150 by 4
 X.cid <- as.numeric(iris[, 5])                        # True id
 
-X <- X[1:10,]
-X.cid <- X.cid[1:10]
+#X <- X[1:10,]
+#X.cid <- X.cid[1:10]
 
 ### Convert to ddmatrix
 X.dmat <- as.ddmatrix(X)
@@ -43,11 +43,13 @@ library(pmclust, quiet = TRUE)
 comm.set.seed(123, diff = TRUE)
 
 X.dmat <- X.std
+
 PARAM.org <- set.global.dmat(K = 3)                   # Preset storage
 .pmclustEnv$CONTROL$debug <- 0                        # Disable debug messages
 PARAM.org <- initial.center.dmat(PARAM.org)
+
 PARAM.kms <- kmeans.step.dmat(PARAM.org)              # K-means
-X.kms.cid <- as.vector(.pmclustEnv$CLASS.dmat)
+X.kms.cid <- as.vector(.pmclustEnv$CLASS)
 
 ### Validation
 X.kms.adjR <- EMCluster::RRand(X.cid, X.kms.cid)$adjRand
